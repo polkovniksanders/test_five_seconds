@@ -1,19 +1,23 @@
 import React from "react"
 import { memo } from "react"
+import {backgrounds} from "../../constants/colors"
 
-const Index = ({height}) => {
+const Graph = ({height}) => {
+
+  const color = Math.floor(Math.random() * backgrounds.length)
+  const isGraphHidden = +height <= 0.9
 
   const stylesGraph = {
-    height: height * 10 + 'px',
-    background: 'red',
     width: '2rem',
-    border: '1px solid black',
     margin: '.5rem 0',
+    height: isGraphHidden ? 0 : height * 10 + 'px',
+    background: backgrounds[color],
+    border: isGraphHidden ? 'none' : '1px solid black',
+    transition: 'all .5s ease',
   }
 
-  return +height === 0 ? null : <div style={stylesGraph}/>
+  return isGraphHidden ? null : <div style={stylesGraph}/>
 
 }
 
-
-export default memo(Index)
+export default memo(Graph)

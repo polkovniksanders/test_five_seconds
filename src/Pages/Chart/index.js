@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react"
 import axios from "axios"
 
+import Container from "../../components/Container"
 import useInterval from "../../hooks/useInterval"
 import Title from "../../components/Title"
 import Graph from "../../components/Graph"
@@ -23,10 +24,8 @@ const ChartPage = () => {
         usersHandler(response.data)
       })
       .catch((error) => {
-        console.log()
-      })
-      .finally(() => {
-        console.log()
+        //Добавление логики отлова ошибок. Такой задачи не было в ТЗ - не стал тратить время на это
+        console.warn(error)
       })
   }
 
@@ -50,20 +49,18 @@ const ChartPage = () => {
   }
 
   return (
-    <div style={{height: '100vh'}}>
-      <div className={styles.container}>
-        <div className={styles.wrapper}>
-          {users.map((u, index) =>
-            <div className={styles.item} key={index}>
-              <Value value={u.value}/>
-              {u.value > 0 ? <Graph height={u.value}/> : null}
-              <Title text={u.name}/>
-            </div>,
-          )}
-        </div>
-        <Play isActive={isActive} setIsActive={setIsActive}/>
+    <Container>
+      <div className={styles.wrapper}>
+        {users.map((u, index) =>
+          <div className={styles.item} key={index}>
+            <Value value={u.value}/>
+            {u.value > 0 ? <Graph height={u.value}/> : null}
+            <Title text={u.name}/>
+          </div>,
+        )}
       </div>
-    </div>
+      <Play isActive={isActive} setIsActive={setIsActive}/>
+    </Container>
   )
 }
 

@@ -6,7 +6,7 @@ import React from "react"
  * @constructor
  */
 const Value = ({value}) => {
-  return <p>{Math.round(value)}</p>
+  return <p>{value !== null && Math.round(value)}</p>
 }
 
 export default Value
