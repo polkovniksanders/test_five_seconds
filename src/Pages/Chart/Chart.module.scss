@@ -1,0 +1,15 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 1rem;
+  &:last-child {
+    margin-right: 0;
+  }
+}

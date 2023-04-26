@@ -3,6 +3,9 @@ import axios from "axios"
 
 import useInterval from "../../hooks/useInterval"
 import {URL, REQUEST_TIMEOUT} from "../../constants/settings"
+import Title from "../../components/Title"
+import Graph from "../../components/Graph"
+import styled from "./Chart.module.scss"
 
 
 const ChartPage = (props) => {
@@ -59,14 +62,18 @@ const ChartPage = (props) => {
 
 
   return (
-    <div>
-      <div>{users.map((u, index) =>
-        <div key={index}>
-          <div>key {index}</div>
-          <div>u.name {u.name}</div>
-          <div>u.value {u.value}</div>
-        </div>)}
+    <div className={''}>
+
+      <div className={styled.wrapper}>
+        {users.map((u, index) =>
+          <div className={styled.item} key={index}>
+            <div>{Math.round(u.value)}</div>
+            {u.value > 0 ? <Graph height={u.value}/> : 0}
+            <Title text={u.name}/>
+          </div>,
+        )}
       </div>
+
     </div>
   )
 }

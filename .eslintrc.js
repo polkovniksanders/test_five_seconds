@@ -13,10 +13,9 @@ module.exports = {
   },
   "plugins": [
     "react",
-    "@typescript-eslint",
   ],
   "rules": {
-    "react/prop-types": "off",
+    "react/prop-types": [ "off" ],
     "semi" : [ 1, "never" ],
     "spaced-comment": 0,
     "space-before-function-paren": 0,
