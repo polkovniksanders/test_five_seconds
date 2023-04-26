@@ -7,16 +7,15 @@ import React from "react"
  * @constructor
  */
 const Title = ({text}) => {
-  console.log(text)
 
-  const _x = {
+  const stylesTitle = {
     transform: 'rotate(90deg)',
     margin: 0,
   }
 
   return (
-    <div style={_x}>
-      <h4 >
+    <div style={stylesTitle}>
+      <h4>
         {text || ''}
       </h4>
     </div>

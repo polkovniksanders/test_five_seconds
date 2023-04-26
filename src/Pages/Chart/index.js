@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useMemo, useState} from "react"
 import axios from "axios"
 
 import useInterval from "../../hooks/useInterval"
-import {URL, REQUEST_TIMEOUT} from "../../constants/settings"
 import Title from "../../components/Title"
 import Graph from "../../components/Graph"
-import styled from "./Chart.module.scss"
+import Play from "../../components/Buttons/Start"
+import Value from "../../components/Value"
+import {URL, REQUEST_TIMEOUT} from "../../constants/settings"
+import styles from "./Chart.module.scss"
 
-
-const ChartPage = (props) => {
-  const [ rawUsers, setRawUsers ] = useState("")
+const ChartPage = () => {
   const [ users, setUsers ] = useState([])
-  /**
-     * получили данные из файла
-     * @returns {Promise<void>}
-     */
-  const get = async () => {
+  const [ isActive, setIsActive ] = useState(true)
+
+  useEffect(() => {
+    getUsers()
+  }, [])
+
+  const getUsers = async () => {
     axios.get(URL)
       .then((response) => {
-        splitName(response.data) // не работает потому что стеqт асинхронныq
+        usersHandler(response.data)
       })
       .catch((error) => {
         console.log()
@@ -27,24 +29,14 @@ const ChartPage = (props) => {
         console.log()
       })
   }
-  /*    useEffect(() => {
-        get().then(()=>splitName())
-       }, [])*/
 
-  useInterval(get, REQUEST_TIMEOUT)
+  useInterval(isActive, getUsers, REQUEST_TIMEOUT)
 
-  /**
-     * Преобразовали данные из файла в нормальные
-     */
-
-
-
-  const splitName = (items) => {
+  const usersHandler = (items) => {
     let users = []
-
     items
-      ?.split("\n") //делаем массив из строки по /n
-      ?.filter((elem) => !!elem) // исключает пустые элементы null из массива и каждую пару прогоняем по пробелам
+      ?.split("\n")
+      ?.filter((elem) => !!elem)
       ?.forEach((item) => {
         const values = item.split(" ")
         if (values[0] && values[1]) {
@@ -57,26 +49,22 @@ const ChartPage = (props) => {
     setUsers(users)
   }
 
-  console.log("raw", rawUsers)
-  console.log("user", users)
-
-
   return (
-    <div className={''}>
-
-      <div className={styled.wrapper}>
-        {users.map((u, index) =>
-          <div className={styled.item} key={index}>
-            <div>{Math.round(u.value)}</div>
-            {u.value > 0 ? <Graph height={u.value}/> : 0}
-            <Title text={u.name}/>
-          </div>,
-        )}
+    <div style={{height: '100vh'}}>
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          {users.map((u, index) =>
+            <div className={styles.item} key={index}>
+              <Value value={u.value}/>
+              {u.value > 0 ? <Graph height={u.value}/> : null}
+              <Title text={u.name}/>
+            </div>,
+          )}
+        </div>
+        <Play isActive={isActive} setIsActive={setIsActive}/>
       </div>
-
     </div>
   )
 }
-
 
 export default ChartPage

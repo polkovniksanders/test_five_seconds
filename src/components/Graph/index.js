@@ -1,9 +1,9 @@
 import React from "react"
 import { memo } from "react"
 
-const Graph = ({height}) => {
+const Index = ({height}) => {
 
-  const styledGraph = {
+  const stylesGraph = {
     height: height * 10 + 'px',
     background: 'red',
     width: '2rem',
@@ -11,9 +11,9 @@ const Graph = ({height}) => {
     margin: '.5rem 0',
   }
 
-  return <div style={styledGraph} />
+  return +height === 0 ? null : <div style={stylesGraph}/>
 
 }
 
 
-export default memo(Graph)
+export default memo(Index)

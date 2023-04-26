@@ -1,6 +1,16 @@
+.container {
+  max-width: 768px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .wrapper {
   display: flex;
   flex-direction: row;
+  border: 1px solid black;
+  padding: 1rem 2rem;
 }
 
 .item {
